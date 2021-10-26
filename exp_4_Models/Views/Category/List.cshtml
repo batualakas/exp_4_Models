@@ -1,0 +1,73 @@
+﻿@using exp_4_Models.Models
+@model List<Category>
+
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h2>Category List</h2>
+            </div>
+            <div class="col-6">
+                <a href="/category/add" class="btn btn-success float-right">Category Add</a>
+            </div>
+        </div>
+    </div>
+    @if (TempData["Mesaj"] != null)
+    {
+        <div id="alertBox" class="alert alert-success" role="alert">
+            @TempData["Mesaj"]
+        </div>
+    }
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Kategori ID</th>
+                    <th>Kategori Adı</th>
+                    <th>Açıklama</th>
+                    <th colspan="2">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var category in Model)
+                    {
+                        <tr>
+                            <td>@category.CategoryID</td>
+                            <td>@category.CategoryName</td>
+                            <td>@category.Description</td>
+                            <td>
+                                <a href="/category/edit/@category.CategoryID" class="btn btn-warning" title="Düzenle">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/category/delete/@category.CategoryID" class="btn btn-danger" title="Sil">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3"> Listede hiçbir veri bulunmamaktadır. </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
