@@ -13,9 +13,7 @@ namespace exp_4_Models.Models
             this.Database.Connection.ConnectionString = "Server=.;Database=Northwind;User Id=sa;Password=123;";
         }
         public DbSet<Category> Categories { get; set; }
-
-
-
+        public DbSet<Shipper> Shippers { get;  set; }
     }
     
 }

@@ -46,7 +46,7 @@ namespace exp_4_Models.Controllers
                 var sonuc = _db.SaveChanges();
                 if (sonuc > 0)
                 {
-                    // db'ye kaydetme
+                    // db'ye kaydet
                     return RedirectToAction("List");
                 }
             }
@@ -75,6 +75,42 @@ namespace exp_4_Models.Controllers
 
             }
             return null;
+        }
+        public ActionResult Edit(int id)
+        {
+            var category = _db.Categories.FirstOrDefault(x => x.CategoryID == id);
+            if (category != null)
+            {
+                return View(category);
+
+            }
+            // kullanıcıya mesaj gönderebilirsiniz.
+            TempData["Mesaj"] = "Düzenelicek Kategori bulunamadı.";
+            return RedirectToAction("List");
+        }
+        [HttpPost]
+        public ActionResult Edit(Category model)
+        {
+            var category = _db.Categories.FirstOrDefault(x => x.CategoryID == model.CategoryID);
+            if (category != null)
+            {
+                category.CategoryName = model.CategoryName;
+                category.Description = model.Description;
+                var sonuc = _db.SaveChanges();
+                if (sonuc>0)
+                {
+                    return RedirectToAction("List");
+                    
+                }
+            }
+            else
+            {
+                ViewBag.Mesaj = "Aynı isimde bir kategori daha eklenemez. Lütfen başka bir isimde kategori ekleyiniz.";
+                return View("Add", model);
+            }
+            return null;
+
+
         }
     }
 }
